@@ -11,6 +11,7 @@ composeBom = "2024.09.00"
 jetbrainsKotlinJvm = "2.0.21"
 appcompat = "1.7.1"
 material = "1.10.0"
+koin = "4.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,6 +30,12 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Koin
+io-insertkoin-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+io-insertkoin-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+io-insertkoin-koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+io-insertkoin-koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
