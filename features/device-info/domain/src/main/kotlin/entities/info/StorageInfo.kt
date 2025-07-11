@@ -6,5 +6,9 @@ data class StorageInfo(
     val usedSpace: Long
 ) {
     val usedPercentage: Float
-        get() = (usedSpace.toFloat() / totalSpace.toFloat()) * 100
+        get() = if (totalSpace > 0) {
+            (usedSpace.toFloat() / totalSpace.toFloat()) * 100
+        } else {
+            0f
+        }
 }
