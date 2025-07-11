@@ -1,17 +1,23 @@
 [versions]
 agp = "8.11.0"
-kotlin = "2.0.21"
+kotlin = "2.2.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.6.1"
+lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
-composeBom = "2024.09.00"
-jetbrainsKotlinJvm = "2.0.21"
+composeBom = "2025.06.01"
+jetbrainsKotlinJvm = "2.2.0"
 appcompat = "1.7.1"
-material = "1.10.0"
+material = "1.12.0"
 koin = "4.1.0"
+mockk = "1.14.4"
+kotlinxCoroutines = "1.10.2"
+turbine = "1.2.1"
+truth = "1.4.4"
+robolectric = "4.15.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,10 +38,18 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # Koin
-io-insertkoin-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 io-insertkoin-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 io-insertkoin-koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
-io-insertkoin-koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+
+# Coroutines
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+
+# Test libraries
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+cash-app-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

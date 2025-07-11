@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "AppliveryTest"
 include(":app")
 include(":features:device-info:domain")
+include(":features:device-info:data")

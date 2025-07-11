@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.amp.appliverytest.features.deviceinfo.domain"
+    namespace = "com.amp.appliverytest.features.deviceinfo.data"
     compileSdk = 36
 
     defaultConfig {
@@ -41,11 +41,13 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.io.insertkoin.koin.android)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(project(":features:device-info:domain"))
 
-    // Para testing
     testImplementation(libs.io.insertkoin.koin.test)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.cash.app.turbine)
     testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
 }
