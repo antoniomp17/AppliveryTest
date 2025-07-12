@@ -15,6 +15,9 @@
             <option value="$PROJECT_DIR$/features/device-info" />
             <option value="$PROJECT_DIR$/features/device-info/data" />
             <option value="$PROJECT_DIR$/features/device-info/domain" />
+            <option value="$PROJECT_DIR$/features/installed-apps" />
+            <option value="$PROJECT_DIR$/features/installed-apps/data" />
+            <option value="$PROJECT_DIR$/features/installed-apps/domain" />
           </set>
         </option>
       </GradleProjectSettings>

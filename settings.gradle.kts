@@ -23,3 +23,5 @@ rootProject.name = "AppliveryTest"
 include(":app")
 include(":features:device-info:domain")
 include(":features:device-info:data")
+include(":features:installed-apps:domain")
+include(":features:installed-apps:data")

@@ -1,6 +1,6 @@
 package usecases
 
-import entities.apps.InstalledApp
+import entities.InstalledApp
 import repositories.InstalledAppsRepository
 
 class GetInstalledAppsUseCase(

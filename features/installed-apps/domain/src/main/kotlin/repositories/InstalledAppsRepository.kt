@@ -1,6 +1,6 @@
 package repositories
 
-import entities.apps.InstalledApp
+import entities.InstalledApp
 import kotlinx.coroutines.flow.Flow
 
 interface InstalledAppsRepository {

@@ -1,7 +1,7 @@
 package usecases
 
 import com.google.common.truth.Truth.assertThat
-import entities.apps.InstalledApp
+import entities.InstalledApp
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
