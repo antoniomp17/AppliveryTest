@@ -20,7 +20,7 @@ import org.koin.android.ext.koin.androidContext
 import repositories.DeviceInfoRepository
 import repositories.DeviceInfoRepositoryImpl
 
-val dataModule = module {
+val deviceInfoDataModule = module {
 
     // System Services
     single { androidContext().getSystemService(Context.BATTERY_SERVICE) as BatteryManager }

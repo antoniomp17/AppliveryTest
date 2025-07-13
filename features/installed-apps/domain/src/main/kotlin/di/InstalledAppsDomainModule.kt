@@ -4,7 +4,7 @@ import org.koin.dsl.module
 import usecases.GetAppDetailsUseCase
 import usecases.GetInstalledAppsUseCase
 
-val domainModule = module {
+val installedAppsDomainModule = module {
     single { GetInstalledAppsUseCase(get()) }
     single { GetAppDetailsUseCase(get()) }
 }
