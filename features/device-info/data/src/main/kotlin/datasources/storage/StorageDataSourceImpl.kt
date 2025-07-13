@@ -27,10 +27,16 @@ class StorageDataSourceImpl : StorageDataSource {
         }
     }
 
+    private companion object {
+        private const val FALLBACK_TOTAL_SPACE_BYTES = 64_000_000_000L
+        private const val FALLBACK_FREE_SPACE_BYTES = 32_000_000_000L
+        private const val FALLBACK_USED_SPACE_BYTES = 32_000_000_000L
+    }
+
     private fun getFallbackStorageInfo(): StorageInfo {
-        val totalSpace = 64_000_000_000L // 64 GB
-        val freeSpace = 32_000_000_000L   // 32 GB
-        val usedSpace = 32_000_000_000L   // 32 GB
+        val totalSpace = FALLBACK_TOTAL_SPACE_BYTES
+        val freeSpace = FALLBACK_FREE_SPACE_BYTES
+        val usedSpace = FALLBACK_USED_SPACE_BYTES
 
         return StorageInfo(
             totalSpace = totalSpace,

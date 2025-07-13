@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen Title -->
+    <string name="device_info_title">Información del Dispositivo</string>
+    
+    <!-- Messages -->
+    <string name="info_updated">Información actualizada</string>
+    
+    <!-- Format Strings -->
+    <string name="last_updated">Última actualización: %1$s</string>
+    
+    <!-- Common Actions -->
+    <string name="back">Volver</string>
+    <string name="refresh">Actualizar</string>
+    <string name="retry">Reintentar</string>
+    
+    <!-- Content Descriptions -->
+    <string name="content_description_back">Volver atrás</string>
+    <string name="content_description_refresh">Actualizar información</string>
+</resources>

@@ -23,7 +23,6 @@ import repositories.DeviceInfoRepositoryImpl
 val deviceInfoDataModule = module {
 
     // System Services
-    single { androidContext().getSystemService(Context.BATTERY_SERVICE) as BatteryManager }
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
 
     // Mappers
@@ -32,7 +31,7 @@ val deviceInfoDataModule = module {
 
     // Specific DataSources
     single<DeviceBasicInfoDataSource> { DeviceBasicInfoDataSourceImpl() }
-    single<BatteryDataSource> { BatteryDataSourceImpl(androidContext(), get(), get()) }
+    single<BatteryDataSource> { BatteryDataSourceImpl(androidContext(), get()) }
     single<NetworkDataSource> { NetworkDataSourceImpl(androidContext(), get(), get()) }
     single<StorageDataSource> { StorageDataSourceImpl() }
 

@@ -86,7 +86,7 @@ class DeviceInfoRepositoryTest {
 
         try {
             repository.getDeviceInfo()
-            assertThat(false).isTrue() // Should not reach here
+            assertThat(false).isTrue()
         } catch (e: DeviceInfoException) {
             assertThat(e.message).contains("Error getting device info")
             assertThat(e.cause).isEqualTo(exception)

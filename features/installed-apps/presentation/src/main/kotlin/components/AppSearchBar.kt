@@ -7,6 +7,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.amp.appliverytest.features.installedapps.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,11 +22,11 @@ fun AppSearchBar(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier,
-        placeholder = { Text("Buscar aplicaciones...") },
+        placeholder = { Text(stringResource(R.string.search_apps_hint)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Buscar"
+                contentDescription = stringResource(R.string.search)
             )
         },
         trailingIcon = {
@@ -32,7 +34,7 @@ fun AppSearchBar(
                 IconButton(onClick = onClearClick) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = "Limpiar búsqueda"
+                        contentDescription = stringResource(R.string.clear_search)
                     )
                 }
             }

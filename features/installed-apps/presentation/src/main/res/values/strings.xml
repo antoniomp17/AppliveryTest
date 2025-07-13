@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen Titles -->
+    <string name="app_details_title">Detalles de Aplicación</string>
+    <string name="installed_apps_title">Aplicaciones Instaladas</string>
+    
+    <!-- Messages -->
+    <string name="apps_updated">Aplicaciones actualizadas</string>
+    
+    <!-- Format Strings -->
+    <string name="installed_apps_count">Aplicaciones Instaladas (%1$d)</string>
+    
+    <!-- UI Elements -->
+    <string name="search_apps_hint">Buscar aplicaciones…</string>
+    <string name="search">Buscar</string>
+    <string name="clear_search">Limpiar búsqueda</string>
+    
+    <!-- Common Actions -->
+    <string name="retry">Reintentar</string>
+    <string name="back">Volver</string>
+    <string name="refresh">Actualizar</string>
+    
+    <!-- Messages -->
+    <string name="no_apps_installed">No se encontraron aplicaciones instaladas</string>
+    <string name="no_apps_found">No hay aplicaciones que coincidan con \"%1$s\"</string>
+</resources>

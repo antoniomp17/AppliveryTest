@@ -17,7 +17,6 @@ import receivers.BatteryBroadcastReceiver
 
 class BatteryDataSourceImpl(
     private val context: Context,
-    private val batteryManager: BatteryManager,
     private val batteryMapper: BatteryMapper
 ) : BatteryDataSource {
 

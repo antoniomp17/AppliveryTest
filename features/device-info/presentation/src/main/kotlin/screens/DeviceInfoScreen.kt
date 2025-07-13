@@ -28,7 +28,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.amp.appliverytest.features.deviceinfo.presentation.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import components.BatteryInfoCard
 import components.DeviceBasicInfoCard
@@ -52,6 +54,8 @@ fun DeviceInfoScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val infoUpdatedMessage = stringResource(R.string.info_updated)
+    
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
@@ -59,7 +63,7 @@ fun DeviceInfoScreen(
                     snackbarHostState.showSnackbar(effect.message)
                 }
                 is DeviceInfoEffect.ShowRefreshSuccess -> {
-                    snackbarHostState.showSnackbar("Información actualizada")
+                    snackbarHostState.showSnackbar(infoUpdatedMessage)
                 }
                 is DeviceInfoEffect.ShowToast -> {
                     snackbarHostState.showSnackbar(effect.message)
@@ -71,13 +75,13 @@ fun DeviceInfoScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Información del Dispositivo") },
+                title = { Text(stringResource(R.string.device_info_title)) },
                 navigationIcon = {
                     onNavigateBack?.let { callback ->
                         IconButton(onClick = callback) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Volver"
+                                contentDescription = stringResource(R.string.content_description_back)
                             )
                         }
                     }
@@ -88,7 +92,7 @@ fun DeviceInfoScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "Actualizar"
+                            contentDescription = stringResource(R.string.content_description_refresh)
                         )
                     }
                 }
@@ -172,7 +176,7 @@ private fun DeviceInfoContent(
         if (lastUpdated > 0) {
             item {
                 Text(
-                    text = "Última actualización: ${formatTimestamp(lastUpdated)}",
+                    text = stringResource(R.string.last_updated, formatTimestamp(lastUpdated)),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp)
@@ -201,11 +205,14 @@ private fun ErrorState(
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(onClick = onRetry) {
-            Text("Reintentar")
+            Text(stringResource(R.string.retry))
         }
     }
 }
 
+@Composable
 private fun formatTimestamp(timestamp: Long): String {
-    return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(timestamp))
+    return remember(timestamp) {
+        SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(timestamp))
+    }
 }

@@ -1,3 +1,15 @@
 <resources>
+    <!-- App Info -->
     <string name="app_name">AppliveryTest</string>
+    <string name="app_title">Applivery Device Monitor</string>
+    
+    <!-- Main Screen -->
+    <string name="select_an_option">Selecciona una opción:</string>
+    <string name="device_info_title">Información del Dispositivo</string>
+    <string name="device_info_description">Ver información detallada del dispositivo, batería, red y almacenamiento</string>
+    <string name="installed_apps_title">Aplicaciones Instaladas</string>
+    <string name="installed_apps_description">Explorar y ver detalles de las aplicaciones instaladas en el dispositivo</string>
+    
+    <!-- Feature Cards -->
+    <string name="feature_card_icon_description">Icono de %1$s</string>
 </resources>

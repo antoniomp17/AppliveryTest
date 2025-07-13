@@ -1,20 +1,39 @@
 package screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.amp.appliverytest.features.installedapps.presentation.R
 import components.AppListItem
 import components.AppSearchBar
 import entities.InstalledApp
@@ -27,11 +46,14 @@ import viewmodels.installedApps.InstalledAppsViewModel
 @Composable
 fun InstalledAppsScreen(
     onNavigateToAppDetails: (String) -> Unit,
-    onNavigateBack: (() -> Unit)? = null,  // Parámetro añadido
+    onNavigateBack: (() -> Unit)? = null,
     viewModel: InstalledAppsViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val appsUpdatedMessage = stringResource(R.string.apps_updated)
+    val backButtonText = stringResource(R.string.back)
+    val refreshButtonText = stringResource(R.string.refresh)
 
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
@@ -40,7 +62,7 @@ fun InstalledAppsScreen(
                     snackbarHostState.showSnackbar(effect.message)
                 }
                 is InstalledAppsEffect.ShowRefreshSuccess -> {
-                    snackbarHostState.showSnackbar("Aplicaciones actualizadas")
+                    snackbarHostState.showSnackbar(appsUpdatedMessage)
                 }
                 is InstalledAppsEffect.NavigateToAppDetails -> {
                     onNavigateToAppDetails(effect.packageName)
@@ -56,7 +78,7 @@ fun InstalledAppsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Aplicaciones Instaladas (${state.totalAppsCount})")
+                    Text(stringResource(R.string.installed_apps_count, state.totalAppsCount))
                 },
                 navigationIcon = {
                     // Mostrar botón de volver solo si se proporciona callback
@@ -64,7 +86,7 @@ fun InstalledAppsScreen(
                         IconButton(onClick = callback) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Volver"
+                                contentDescription = backButtonText
                             )
                         }
                     }
@@ -75,7 +97,7 @@ fun InstalledAppsScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "Actualizar"
+                            contentDescription = stringResource(R.string.refresh)
                         )
                     }
                 }
@@ -190,7 +212,7 @@ private fun ErrorState(
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(onClick = onRetry) {
-            Text("Reintentar")
+            Text(stringResource(R.string.retry))
         }
     }
 }
@@ -200,16 +222,18 @@ private fun EmptyAppsState(
     searchQuery: String,
     modifier: Modifier = Modifier
 ) {
+    val emptyMessage = if (searchQuery.isBlank()) {
+        stringResource(R.string.no_apps_installed)
+    } else {
+        stringResource(R.string.no_apps_found, searchQuery)
+    }
+    
     Column(
         modifier = modifier.padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = if (searchQuery.isBlank()) {
-                "No se encontraron aplicaciones instaladas"
-            } else {
-                "No hay aplicaciones que coincidan con \"$searchQuery\""
-            },
+            text = emptyMessage,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

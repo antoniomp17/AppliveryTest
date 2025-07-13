@@ -9,7 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.amp.appliverytest.features.installedapps.presentation.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import components.AppDetailCard
 import entities.InstalledApp
@@ -48,7 +50,7 @@ fun AppDetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(state.app?.name ?: "Detalles de Aplicación") },
+                title = { Text(state.app?.name ?: stringResource(R.string.app_details_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -131,7 +133,7 @@ private fun ErrorState(
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(onClick = onRetry) {
-            Text("Reintentar")
+            Text(stringResource(R.string.retry))
         }
     }
 }

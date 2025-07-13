@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.amp.appliverytest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,7 +24,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Applivery Device Monitor") }
+                title = { Text(stringResource(R.string.app_title)) }
             )
         }
     ) { paddingValues ->
@@ -35,21 +37,21 @@ fun MainScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Selecciona una opción:",
+                text = stringResource(R.string.select_an_option),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
             
             FeatureCard(
-                title = "Información del Dispositivo",
-                description = "Ver información detallada del dispositivo, batería, red y almacenamiento",
+                title = stringResource(R.string.device_info_title),
+                description = stringResource(R.string.device_info_description),
                 icon = Icons.Default.Phone,
                 onClick = onNavigateToDeviceInfo
             )
             
             FeatureCard(
-                title = "Aplicaciones Instaladas",
-                description = "Explorar y ver detalles de las aplicaciones instaladas en el dispositivo",
+                title = stringResource(R.string.installed_apps_title),
+                description = stringResource(R.string.installed_apps_description),
                 icon = Icons.Default.Apps,
                 onClick = onNavigateToInstalledApps
             )
@@ -78,7 +80,10 @@ private fun FeatureCard(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = null,
+                contentDescription = stringResource(
+                    R.string.feature_card_icon_description,
+                    title
+                ),
                 modifier = Modifier.size(48.dp),
                 tint = MaterialTheme.colorScheme.primary
             )

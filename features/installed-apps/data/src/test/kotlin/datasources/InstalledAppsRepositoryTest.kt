@@ -48,7 +48,7 @@ class InstalledAppsRepositoryTest {
 
         try {
             repository.getInstalledApps()
-            assertThat(false).isTrue() // Should not reach here
+            assertThat(false).isTrue()
         } catch (e: InstalledAppsException) {
             assertThat(e.message).contains("Error getting installed apps")
             assertThat(e.cause).isEqualTo(exception)
