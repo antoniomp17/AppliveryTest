@@ -1,5 +1,6 @@
 package repositories
 
+import datasources.DeviceInfoDataSource
 import datasources.battery.BatteryDataSource
 import datasources.device.DeviceBasicInfoDataSource
 import datasources.network.NetworkDataSource
@@ -21,21 +22,18 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.isActive
 
 class DeviceInfoRepositoryImpl(
-    private val deviceBasicInfoDataSource: DeviceBasicInfoDataSource,
-    private val batteryDataSource: BatteryDataSource,
-    private val networkDataSource: NetworkDataSource,
-    private val storageDataSource: StorageDataSource
+    private val deviceInfoDataSource: DeviceInfoDataSource
 ) : DeviceInfoRepository {
     
     override suspend fun getDeviceInfo(): DeviceInfo {
         return try {
             DeviceInfo(
-                deviceModel = deviceBasicInfoDataSource.getDeviceModel(),
-                manufacturer = deviceBasicInfoDataSource.getManufacturer(),
-                osVersion = deviceBasicInfoDataSource.getOsVersion(),
-                availableStorage = storageDataSource.getStorageInfo(),
-                batteryInfo = batteryDataSource.getBatteryInfo(),
-                networkInfo = networkDataSource.getNetworkInfo()
+                deviceModel = deviceInfoDataSource.getDeviceModel(),
+                manufacturer = deviceInfoDataSource.getManufacturer(),
+                osVersion = deviceInfoDataSource.getOsVersion(),
+                availableStorage = deviceInfoDataSource.getStorageInfo(),
+                batteryInfo = deviceInfoDataSource.getBatteryInfo(),
+                networkInfo = deviceInfoDataSource.getNetworkInfo()
             )
         } catch (e: Exception) {
             throw DeviceInfoException("Error getting device info: ${e.message}", e)
@@ -44,7 +42,7 @@ class DeviceInfoRepositoryImpl(
     
     override suspend fun getBatteryInfo(): BatteryInfo {
         return try {
-            batteryDataSource.getBatteryInfo()
+            deviceInfoDataSource.getBatteryInfo()
         } catch (e: Exception) {
             throw DeviceInfoException("Error getting battery info: ${e.message}", e)
         }
@@ -52,7 +50,7 @@ class DeviceInfoRepositoryImpl(
     
     override suspend fun getStorageInfo(): StorageInfo {
         return try {
-            storageDataSource.getStorageInfo()
+            deviceInfoDataSource.getStorageInfo()
         } catch (e: Exception) {
             throw DeviceInfoException("Error getting storage info: ${e.message}", e)
         }
@@ -60,7 +58,7 @@ class DeviceInfoRepositoryImpl(
     
     override suspend fun getNetworkInfo(): NetworkInfo {
         return try {
-            networkDataSource.getNetworkInfo()
+            deviceInfoDataSource.getNetworkInfo()
         } catch (e: Exception) {
             NetworkInfo(ConnectionType.NONE, false, null)
         }
@@ -68,17 +66,17 @@ class DeviceInfoRepositoryImpl(
     
     override fun observeMonitoringEvents(): Flow<MonitoringEvent> {
         return merge(
-            batteryDataSource.observeBatteryChanges()
+            deviceInfoDataSource.observeBatteryChanges()
                 .map { MonitoringEvent.BatteryChanged(it) },
-            
-            networkDataSource.observeNetworkChanges()
+
+            deviceInfoDataSource.observeNetworkChanges()
                 .map { MonitoringEvent.NetworkChanged(it) },
 
             flow {
                 while (currentCoroutineContext().isActive) {
                     delay(30_000)
                     try {
-                        val storageInfo = storageDataSource.getStorageInfo()
+                        val storageInfo = deviceInfoDataSource.getStorageInfo()
                         emit(MonitoringEvent.StorageChanged(storageInfo))
                     } catch (e: Exception) { } // Ignore
                 }

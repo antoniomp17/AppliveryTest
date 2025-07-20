@@ -90,6 +90,9 @@ dependencies {
     implementation(project(":features:device-info:data"))
     implementation(project(":features:installed-apps:domain"))
     implementation(project(":features:installed-apps:data"))
+    implementation(project(":features:device-location:presentation"))
+    implementation(project(":features:device-location:domain"))
+    implementation(project(":features:device-location:data"))
 
     // Testing
     testImplementation(libs.junit)

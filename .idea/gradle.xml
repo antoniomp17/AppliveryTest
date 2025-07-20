@@ -16,6 +16,10 @@
             <option value="$PROJECT_DIR$/features/device-info/data" />
             <option value="$PROJECT_DIR$/features/device-info/domain" />
             <option value="$PROJECT_DIR$/features/device-info/presentation" />
+            <option value="$PROJECT_DIR$/features/device-location" />
+            <option value="$PROJECT_DIR$/features/device-location/data" />
+            <option value="$PROJECT_DIR$/features/device-location/domain" />
+            <option value="$PROJECT_DIR$/features/device-location/presentation" />
             <option value="$PROJECT_DIR$/features/installed-apps" />
             <option value="$PROJECT_DIR$/features/installed-apps/data" />
             <option value="$PROJECT_DIR$/features/installed-apps/domain" />

@@ -1,7 +1,7 @@
 [versions]
 # Kotlin & Android
 kotlin = "2.2.0"
-agp = "8.11.1"
+agp = "8.12.0-rc01"
 compileSdk = "36"
 minSdk = "23"
 targetSdk = "36"
@@ -37,6 +37,9 @@ androidxTest = "1.6.1"
 material3 = "1.12.0"
 coreKtx = "1.16.0"
 icons = "1.7.8"
+
+# Location
+location = "21.3.0"
 
 [libraries]
 # Compose BOM - ACTUALIZADO
@@ -76,6 +79,9 @@ coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 
 # Android Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+# Location
+location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

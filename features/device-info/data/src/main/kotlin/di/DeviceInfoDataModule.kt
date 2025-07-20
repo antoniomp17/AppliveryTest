@@ -42,6 +42,6 @@ val deviceInfoDataModule = module {
 
     // Repository Implementation
     single<DeviceInfoRepository> {
-        DeviceInfoRepositoryImpl(get(), get(), get(), get())
+        DeviceInfoRepositoryImpl(get())
     }
 }
