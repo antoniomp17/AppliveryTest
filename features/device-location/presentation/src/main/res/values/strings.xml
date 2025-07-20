@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Screen titles -->
+    <string name="device_location_title">Ubicación del Dispositivo</string>
+    <string name="device_location_description">Ver la ubicación actual del dispositivo en el mapa y detalles de ubicación</string>
+    
+    <!-- Screen titles and navigation -->
+    <string name="location_info_title">Información de Ubicación</string>
+    <string name="back">Atrás</string>
+    <string name="refresh">Actualizar</string>
+    <string name="retry">Reintentar</string>
+    
+    <!-- Location data labels -->
+    <string name="latitude_label">Latitud</string>
+    <string name="longitude_label">Longitud</string>
+    <string name="altitude_label">Altitud</string>
+    <string name="accuracy_label">Precisión</string>
+    <string name="speed_label">Velocidad</string>
+    <string name="bearing_label">Rumbo</string>
+    <string name="provider_label">Proveedor</string>
+    <string name="last_update_label">Última actualización</string>
+    <string name="status_label">Estado</string>
+    
+    <!-- Location status messages -->
+    <string name="location_updated">Ubicación actualizada</string>
+    <string name="location_not_available">Ubicación no disponible</string>
+    <string name="unknown_provider">Desconocido</string>
+    <string name="last_updated">Última actualización: %1$s</string>
+    
+    <!-- Content descriptions for accessibility -->
+    <string name="location_icon_description">Ubicación</string>
+    <string name="map_icon_description">Mapa</string>
+    <string name="permission_icon_description">Permisos</string>
+    
+    <!-- Map card -->
+    <string name="location_map_title">Ubicación en Mapa</string>
+    <string name="open_in_maps">Abrir en Google Maps</string>
+    <string name="coordinates_format">Lat: %1$s\nLon: %2$s</string>
+    
+    <!-- Permission card -->
+    <string name="location_permission_title">Permisos de Ubicación</string>
+    <string name="location_permission_description">Esta aplicación necesita acceso a tu ubicación para mostrar información detallada.</string>
+    <string name="grant_permission">Conceder Permisos</string>
+    
+    <!-- Units and formats -->
+    <string name="degrees_format">%.6f°</string>
+    <string name="meters_format">%.1f m</string>
+    <string name="speed_format">%.1f m/s</string>
+    <string name="bearing_format">%.1f°</string>
 </resources>

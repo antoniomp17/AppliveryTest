@@ -1,8 +1,6 @@
 package datasources
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import callbacks.LocationCallbackImpl
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -16,6 +14,9 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import mappers.LocationMapper
 import java.util.concurrent.Executors
 
@@ -25,19 +26,37 @@ class LocationDatasourceImpl(
     private val locationMapper: LocationMapper
 ): LocationDatasource {
 
+    // Shared executor that won't be shutdown during individual flow operations
+    private val locationExecutor = Executors.newSingleThreadExecutor { r ->
+        Thread(r, "LocationUpdates").apply {
+            isDaemon = true
+        }
+    }
+
     @Suppress("MissingPermission")
-    override fun getLocation(): LocationInfo {
+    override suspend fun getLocation(): LocationInfo {
         return try {
             if (!hasLocationPermission()) {
-                throw SecurityException("Location permission not granted")
+                throw LocationInfoException("Location permission not granted")
             }
 
-            val lastLocation = fusedLocationProviderClient.lastLocation.result
-                ?: throw IllegalStateException("Last location is not available")
-
-            locationMapper.mapLocationInfo(lastLocation)
+            suspendCancellableCoroutine { continuation ->
+                fusedLocationProviderClient.lastLocation
+                    .addOnSuccessListener { location ->
+                        val locationInfo = location?.let { 
+                            locationMapper.mapLocationInfo(it) 
+                        } ?: LocationInfo.noLocation()
+                        continuation.resume(locationInfo)
+                    }
+                    .addOnFailureListener { exception ->
+                        continuation.resumeWithException(
+                            LocationInfoException("Failed to get location", exception)
+                        )
+                    }
+            }
         } catch (e: Exception) {
-            throw LocationInfoException("Failed to get location: ${e.message}", e)
+            if (e is LocationInfoException) throw e
+            throw LocationInfoException("Error getting location", e)
         }
     }
 
@@ -47,34 +66,35 @@ class LocationDatasourceImpl(
                 throw LocationInfoException("Location permission not granted")
             }
         }
+        return observeLocationChanges()
+    }
+
+    private fun observeLocationChanges(): Flow<LocationInfo> {
         return observeLocationChangesWithPermission()
     }
 
     @Suppress("MissingPermission")
     private fun observeLocationChangesWithPermission(): Flow<LocationInfo> = callbackFlow {
-        val callback = LocationCallbackImpl(locationMapper) { trySend(it) }
-        val executor = Executors.newSingleThreadExecutor()
+        val callback = LocationCallbackImpl(locationMapper) { locationInfo ->
+            trySend(locationInfo)
+        }
 
-        val locationRequest = LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            10000L
-        ).apply {
-            setMinUpdateIntervalMillis(5000L)
-            setMinUpdateDistanceMeters(10f)
-            setMaxUpdateDelayMillis(15000L)
-        }.build()
+        val locationRequest = createLocationRequest()
 
         try {
-            fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                executor,
-                callback
-            )
-
-            val lastLocation = fusedLocationProviderClient.lastLocation.result
-            if (lastLocation != null) {
-                trySend(locationMapper.mapLocationInfo(lastLocation))
-            }
+            requestLocationUpdates(locationRequest, callback)
+            
+            // Get last known location immediately
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener { location ->
+                    location?.let {
+                        val locationInfo = locationMapper.mapLocationInfo(it)
+                        trySend(locationInfo)
+                    }
+                }
+                .addOnFailureListener {
+                    // Ignore failure, we'll get updates through callback
+                }
         } catch (e: SecurityException) {
             close(LocationInfoException("Location permission revoked", e))
         } catch (e: Exception) {
@@ -83,17 +103,42 @@ class LocationDatasourceImpl(
 
         awaitClose {
             fusedLocationProviderClient.removeLocationUpdates(callback)
-            executor.shutdown()
         }
     }.catch { e ->
         if (e is LocationInfoException) throw e
         throw LocationInfoException("Error in location flow", e)
     }.distinctUntilChanged()
 
+    private fun createLocationRequest(): LocationRequest {
+        return LocationRequest.Builder(
+            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+            30000L
+        ).apply {
+            setMinUpdateIntervalMillis(15000L)
+            setMaxUpdateDelayMillis(45000L)
+        }.build()
+    }
+
+    @Suppress("MissingPermission")
+    private fun requestLocationUpdates(
+        locationRequest: LocationRequest, 
+        callback: LocationCallbackImpl
+    ) {
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationExecutor,
+            callback
+        )
+    }
+
     private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+        ContextCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
     }
 }

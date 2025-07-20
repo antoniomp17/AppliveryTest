@@ -12,20 +12,9 @@ class LocationCallbackImpl(
 ): LocationCallback() {
 
     override fun onLocationResult(locationResult: LocationResult) {
-        onLocationChanged(
-            if (locationResult.lastLocation == null) {
-                LocationInfo.noLocation()
-            } else {
-                locationMapper.mapLocationInfo(locationResult.lastLocation!!)
-            }
-        )
-    }
-
-    override fun onLocationAvailability(locationAvailability: LocationAvailability) {
-        if (!locationAvailability.isLocationAvailable) {
-            onLocationChanged(
-                LocationInfo.noLocation()
-            )
+        locationResult.lastLocation?.let { location ->
+            val mappedLocation = locationMapper.mapLocationInfo(location)
+            onLocationChanged(mappedLocation)
         }
     }
 }

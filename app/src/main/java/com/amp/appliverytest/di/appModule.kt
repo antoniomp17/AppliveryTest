@@ -8,6 +8,7 @@ import di.installedAppsDomainModule
 import di.installedAppsPresentationModule
 import di.locationInfoDataModule
 import di.locationInfoDomainModule
+import di.locationInfoPresentationModule
 import org.koin.dsl.module
 
 val appModule = module {
@@ -19,6 +20,7 @@ val appModule = module {
         deviceInfoDomainModule,
         deviceInfoPresentationModule,
         locationInfoDomainModule,
-        locationInfoDataModule
+        locationInfoDataModule,
+        locationInfoPresentationModule
     )
 }

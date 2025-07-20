@@ -84,6 +84,7 @@ dependencies {
     // Módulos del proyecto
     implementation(project(":features:device-info:presentation"))
     implementation(project(":features:installed-apps:presentation"))
+    implementation(project(":features:device-location:presentation"))
 
     // DI modules
     implementation(project(":features:device-info:domain"))

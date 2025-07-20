@@ -9,7 +9,9 @@
     <string name="device_info_description">Ver información detallada del dispositivo, batería, red y almacenamiento</string>
     <string name="installed_apps_title">Aplicaciones Instaladas</string>
     <string name="installed_apps_description">Explorar y ver detalles de las aplicaciones instaladas en el dispositivo</string>
-    
+    <string name="device_location_title">Ubicación del Dispositivo</string>
+    <string name="device_location_description">Ver la ubicación actual del dispositivo en el mapa y detalles de ubicación</string>
+
     <!-- Feature Cards -->
     <string name="feature_card_icon_description">Icono de %1$s</string>
 </resources>

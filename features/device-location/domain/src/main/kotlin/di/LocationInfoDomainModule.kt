@@ -2,9 +2,9 @@ package di
 
 import org.koin.dsl.module
 import usecases.GetLocationInfoUseCase
-import usecases.ObserverLocationInfoUseCase
+import usecases.ObserveLocationInfoUseCase
 
 val locationInfoDomainModule = module {
     single { GetLocationInfoUseCase(get()) }
-    single { ObserverLocationInfoUseCase(get()) }
+    single { ObserveLocationInfoUseCase(get()) }
 }

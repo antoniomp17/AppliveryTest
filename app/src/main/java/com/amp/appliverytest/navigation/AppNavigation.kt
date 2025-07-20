@@ -9,6 +9,7 @@ import com.amp.appliverytest.screens.MainScreen
 import screens.AppDetailsScreen
 import screens.DeviceInfoScreen
 import screens.InstalledAppsScreen
+import screens.LocationInfoScreen
 
 @Composable
 fun AppNavigation(
@@ -25,6 +26,9 @@ fun AppNavigation(
                 },
                 onNavigateToInstalledApps = {
                     navController.navigate(AppDestinations.INSTALLED_APPS)
+                },
+                onNavigateToLocationInfo = {
+                    navController.navigate(AppDestinations.LOCATION)
                 }
             )
         }
@@ -57,6 +61,14 @@ fun AppNavigation(
                 }
             )
         }
+
+        composable(AppDestinations.LOCATION) {
+            LocationInfoScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
 
@@ -65,4 +77,5 @@ object AppDestinations {
     const val DEVICE_INFO = "device-info"
     const val INSTALLED_APPS = "installed-apps"
     const val APP_DETAILS = "app-details"
+    const val LOCATION = "location"
 }

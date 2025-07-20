@@ -7,5 +7,7 @@ data class LocationInfoState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val lastUpdated: Long = 0,
-    val isRefreshing: Boolean = false
+    val isRefreshing: Boolean = false,
+    val hasLocationPermission: Boolean = false,
+    val shouldShowPermissionRationale: Boolean = false
 )

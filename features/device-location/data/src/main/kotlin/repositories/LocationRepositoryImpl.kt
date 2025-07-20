@@ -6,7 +6,7 @@ import exceptions.LocationInfoException
 import kotlinx.coroutines.flow.Flow
 
 class LocationRepositoryImpl(
-    val locationDatasource: LocationDatasource
+    private val locationDatasource: LocationDatasource
 ): LocationRepository {
 
     override suspend fun getLocationInfo(): LocationInfo {

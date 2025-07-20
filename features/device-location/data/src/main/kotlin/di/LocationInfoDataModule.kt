@@ -7,6 +7,7 @@ import datasources.LocationDatasourceImpl
 import mappers.LocationMapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import repositories.LocationRepository
 import repositories.LocationRepositoryImpl
 
 val locationInfoDataModule = module {
@@ -29,5 +30,5 @@ val locationInfoDataModule = module {
     }
 
     // Repository Implementation
-    single { LocationRepositoryImpl(get()) }
+    single<LocationRepository> { LocationRepositoryImpl(get()) }
 }

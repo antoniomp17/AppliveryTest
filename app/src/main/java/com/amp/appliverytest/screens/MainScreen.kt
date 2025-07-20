@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -19,7 +20,8 @@ import com.amp.appliverytest.R
 @Composable
 fun MainScreen(
     onNavigateToDeviceInfo: () -> Unit,
-    onNavigateToInstalledApps: () -> Unit
+    onNavigateToInstalledApps: () -> Unit,
+    onNavigateToLocationInfo: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -54,6 +56,13 @@ fun MainScreen(
                 description = stringResource(R.string.installed_apps_description),
                 icon = Icons.Default.Apps,
                 onClick = onNavigateToInstalledApps
+            )
+
+            FeatureCard(
+                title = stringResource(R.string.device_location_title),
+                description = stringResource(R.string.device_location_description),
+                icon = Icons.Default.LocationOn,
+                onClick = onNavigateToLocationInfo
             )
         }
     }
