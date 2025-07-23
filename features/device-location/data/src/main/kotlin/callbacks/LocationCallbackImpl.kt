@@ -1,9 +1,8 @@
 package callbacks
 
-import com.google.android.gms.location.LocationAvailability
-import entities.LocationInfo
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
+import entities.LocationInfo
 import mappers.LocationMapper
 
 class LocationCallbackImpl(
