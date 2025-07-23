@@ -21,14 +21,13 @@ import org.robolectric.RobolectricTestRunner
 class BatteryDataSourceTest {
 
     private val context: Context = mockk()
-    private val batteryManager: BatteryManager = mockk()
     private val batteryMapper: BatteryMapper = mockk()
 
     private lateinit var dataSource: BatteryDataSource
 
     @Before
     fun setup() {
-        dataSource = BatteryDataSourceImpl(context, batteryManager, batteryMapper)
+        dataSource = BatteryDataSourceImpl(context, batteryMapper)
     }
 
     @Test
