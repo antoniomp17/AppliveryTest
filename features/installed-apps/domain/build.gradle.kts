@@ -56,5 +56,5 @@ dependencies {
     testImplementation(libs.turbine)
 
     // Koin Testing
-    testImplementation(libs.koin.core)
+    testImplementation(libs.koin.test)
 }
